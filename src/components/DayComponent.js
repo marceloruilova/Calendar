@@ -1,62 +1,104 @@
-import React from 'react';
+import React, { Component } from 'react';
+
 var numbers = [30, 31, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 1, 2]
-const RenderDays = () => {
-    /*var today = new Date(),
-        date = today.toUTCString().replace(',', '').split(' ');
-    var day=parseInt(date[1].substr(1,2));
-    var numbersascendent = [];
-    var numbersdescendent = [];
-    var limite=day+(32-day);
-    var i=0;
-    for (i = 1; i < limite; i++) {
-        numbersascendent.push(i);
-        if(i==limite){
-            break;
+
+class Day extends Component {
+    constructor() {
+        super();
+        this.showMenu = this.showMenu.bind(this);
+        this.state = {
+            showMenu: false,
         }
     }
-    debugger
-    for (i = day; i>0; i--) {
-        if(i==0){
-            i=30;
-        }
-        numbersdescendent.push(i);
+    
+    showMenu(event) {
+        event.preventDefault();
+        this.setState({
+            showMenu: !this.state.showMenu,
+        });
     }
-*/
-
-
-    return (
-        <div className="container">
-            <div className="row">
-                {numbers.map((numbers,index) => {
+    render() {
+        return (
+            <div className="container">
+                <div className="row">
+                {numbers.map((numbers, index) => {
+                    //Rendering only multiples of 7 for adding backgroundcolor
                     if (index % 7 == 0) {
                         return (
                             <div className="col-1-5-colored">
-                                <p>{numbers}</p>
+                                {numbers}
+                                <button onClick={(e) => this.deleteRow(id, e)}>
+                                    <span className="fa fa-plus-square"></span>
+                                </button>
+
+                                {
+                                    this.state.showMenu
+                                        ? (
+                                            <div className="menu">
+                                                <button> Add </button>
+                                                <button> Edit </button>
+                                            </div>
+                                        )
+                                        : (
+                                            null
+                                        )
+                                }
                             </div>
+
                         );
                     }
-                    else if (index == 6|index==13|index==20|index==27|index==34) {
+                    //Rendering only Saturday for adding backgroundcolor
+                    else if (index == 6 | index == 13 | index == 20 | index == 27 | index == 34) {
                         return (
                             <div className="col-1-5-colored">
-                                <p>{numbers}</p>
+                                {numbers}
+                                <button onClick={(e) => this.deleteRow(id, e)}>
+                                        <span className="fa fa-plus-square"></span>
+                                </button>
+
+                                {
+                                    this.state.showMenu
+                                        ? (
+                                            <div className="menu">
+                                                <button> Add </button>
+                                                <button> Edit </button>
+                                            </div>
+                                        )
+                                        : (
+                                            null
+                                        )
+                                }
                             </div>
                         );
                     }
+                    //Rendering the space between Weekends
                     else {
                         return (
-                            <div className="col-1-5-uncolored">
-                                <p>{numbers}</p>
-                            </div>
+                                <div className="col-1-5-colored">
+                                    {numbers}
+                                    <button onClick={(e) => this.deleteRow(id, e)}>
+                                        <span className="fa fa-plus-square"></span>
+                                    </button>
+                                    {
+                                        this.state.showMenu
+                                            ? (
+                                                <div className="menu">
+                                                    <button> Add </button>
+                                                    <button> Edit </button>
+                                                </div>
+                                            )
+                                            : (
+                                                null
+                                            )
+                                    }
+                                </div>
                         );
                     }
                 })}
+                </div>
             </div>
-        </div>
-    );
-};
-
-const Day = () => {
-    return (<RenderDays />);
+        );
+    }
 }
 
 export default Day;
