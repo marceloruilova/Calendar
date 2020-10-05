@@ -1,0 +1,26 @@
+{
+  "reminders": [
+    {
+      "id": 0,
+      "text": "Recordatorio",
+      "day_name": "",
+      "day_number": "",
+      "month": "",
+      "year": "",
+      "time": "",
+      "city": "Quito",
+      "color": "#fff"
+    },
+    {
+      "text": "Reminder",
+      "day_name": "Mon",
+      "day_number": "05",
+      "month": "Oct",
+      "year": "2020",
+      "time": "00:09:36",
+      "city": "Cuenca",
+      "color": "#EEF",
+      "id": 1
+    }
+  ]
+}
