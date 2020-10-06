@@ -2,14 +2,17 @@ import React, { Component, useState } from 'react';
 import {
     Label, Col, Row, Button, Modal, ModalHeader, ModalBody
 } from 'reactstrap';
-import Forecast from './ForecastComponent';
+//import Forecast from './ForecastComponent';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 import { ChromePicker, CirclePicker, SketchPicker } from 'react-color';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => val && (val.length >= len);
-const numbers = [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, -2, -3];
+const isNumber = (val) => !isNaN(Number(val));
+//const maxNumber = (val) => val > 0 || val < 32;
+
+const numbers = [30, 31, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 1, 2];
 
 class ReminderForm extends Component {
     constructor(props) {
@@ -30,7 +33,7 @@ class ReminderForm extends Component {
     handleSubmit(values) {
         console.log('Current State is: ' + JSON.stringify(values));
         alert('Current State is: ' + JSON.stringify(values));
-        this.props.postReminder(this.props.id, values.text, values.day_name, values.day_number, values.month, values.year, values.time, values.city, values.color);
+        this.props.postReminder(this.props.id, values.text, values.day_name, values.day_number, values.month, values.year, values.time,values.reminder_day,values.reminder_number, values.city, values.color);
         this.props.resetReminderForm();
     }
 
@@ -39,14 +42,14 @@ class ReminderForm extends Component {
 
         return (
             <div>
-                <Button outline onClick={this.toggleModal}><span className="fa fa-plus-square" aria-hidden="true">+</span></Button>
+                <Button outline onClick={this.toggleModal}><span className="fa fa-plus-square" aria-hidden="true"></span></Button>
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                     <ModalHeader toggle={this.toggleModal}>Submit Reminder</ModalHeader>
                     <ModalBody>
                         <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
                             <Row className="form-group">
                                 <Col md={12}>
-                                    <Label htmlFor="text">Title</Label>
+                                    <Label htmlFor="text">Text</Label>
                                     <Control.text
                                         model=".text"
                                         name="text"
@@ -92,7 +95,45 @@ class ReminderForm extends Component {
                             </Row>
                             <Row className="form-group">
                                 <Col md={12}>
-                                    <Label htmlFor="color">Choose a color</Label>
+                                    <Label htmlFor="reminder_number">Write number 1-30</Label>
+                                    <Control.text
+                                        model=".reminder_number"
+                                        name="reminder_number"
+                                        className="form-control"
+                                        validators={{
+                                            required,isNumber/*,maxNumber*/
+                                        }}
+                                    />
+                                    <Errors
+                                        className="text-danger"
+                                        model=".reminder_number"
+                                        show="touched"
+                                        messages={{
+                                            required: ' Required ',
+                                            //maxNumber: ' The range of days is 1-31',
+                                            isNumber: ' You must add a number'
+                                        }}
+                                    />
+                                </Col>
+                            </Row>
+                            <Row className="form-group">
+                                <Col md={12}>
+                                    <Label htmlFor="reminder_day">Reminder Day</Label>
+                                    <Control.select model=".reminder_day" name="reminder_day"
+                                        className="form-control">
+                                        <option>Sunday</option>
+                                        <option>Monday</option>
+                                        <option>Tuesday</option>
+                                        <option>Wednesday</option>
+                                        <option>Thursday</option>
+                                        <option>Friday</option>
+                                        <option>Saturday</option>
+                                    </Control.select>
+                                </Col>
+                            </Row>
+                            <Row className="form-group">
+                                <Col md={12}>
+                                    <Label htmlFor="color">Write a color</Label>
                                     <Control.text
                                         model=".color"
                                         name="color"
@@ -104,29 +145,6 @@ class ReminderForm extends Component {
                                     <Errors
                                         className="text-danger"
                                         model=".color"
-                                        show="touched"
-                                        messages={{
-                                            required: 'Required ',
-                                            minLength: 'Must be greater than 2 characters',
-                                            maxLength: 'Must be 15 characters or less'
-                                        }}
-                                    />
-                                </Col>
-                            </Row>
-                            <Row className="form-group">
-                                <Col md={12}>
-                                    <Label htmlFor="city">Date</Label>
-                                    <Control.text
-                                        model=".date"
-                                        name="date"
-                                        className="form-control"
-                                        validators={{
-                                            required, minLength: minLength(3), maxLength: maxLength(30)
-                                        }}
-                                    />
-                                    <Errors
-                                        className="text-danger"
-                                        model=".date"
                                         show="touched"
                                         messages={{
                                             required: 'Required ',
@@ -168,26 +186,27 @@ class ShowReminders extends Component {
     handleSubmit(values) {
         console.log('Current State is: ' + JSON.stringify(values));
         alert('Current State is: ' + JSON.stringify(values));
-        this.props.postReminder(this.props.id, values.text, values.day_name, values.day_number, values.month, values.year, values.time, values.city, values.color);
+        this.props.postReminder(this.props.id, values.text, values.day_name, values.day_number, values.month, values.year, values.time,values.reminder_day,values.reminder_number, values.city, values.color);
         this.props.resetReminderForm();
     }
 
     render() {
         //const errors = this.validate(this.state.firstname, this.state.lastname, this.state.telnum, this.state.email);
-debugger
+        
         return (
             <div>
-                <Button outline onClick={this.toggleModal}><span aria-hidden="true">See</span></Button>
+                <Button outline onClick={this.toggleModal}><span className="fa fa-book"></span></Button>
                 <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                     <ModalHeader toggle={this.toggleModal}>Reminders</ModalHeader>
                     <ModalBody>
                         <ul className="list-unnstyled" >
                             {this.props.reminders.map((reminder) => {
                                 return (
-                                    <li key={reminder.id}>
-                                        <p>{reminder.day_name}</p>
+                                    <li key={reminder.id} >
+                                        <h4>{reminder.reminder_day} {reminder.reminder_number}th {reminder.year} </h4>
+                                        <p>-- {reminder.text} </p>
+                                        <p>-- {reminder.city} </p>
                                         <p>-- {reminder.time} </p>
-                                        <p>-- {reminder.year} </p>
                                     </li>
                                 );
                             })}
@@ -216,8 +235,9 @@ const Day = (props) => {
                                 <ShowReminders
                                     reminders={props.reminders}
                                 />
-                                <Forecast forecasts={props.forecasts}/>
                             </div>
+                               // <Forecast forecasts={props.forecasts}/>
+                                
                         );
                     }
                     //Rendering only Saturday for adding backgroundcolor
@@ -233,9 +253,8 @@ const Day = (props) => {
                                 <ShowReminders
                                     reminders={props.reminders}
                                 />
-                                <Forecast forecasts={props.forecasts}/>
-
                             </div>
+                            //<Forecast forecasts={props.forecasts}/>
                         );
                     }
                     //Rendering the space between Weekends
@@ -251,9 +270,9 @@ const Day = (props) => {
                                 <ShowReminders
                                     reminders={props.reminders}
                                 />
-                                <Forecast forecasts={props.forecasts}/>
 
                             </div>
+                            //<Forecast forecasts={props.forecasts}/>
                         );
                     }
                 })}

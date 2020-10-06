@@ -9,7 +9,9 @@ export const REMINDERS = [
         month: date[2],
         year:date[3],
         time: date[4],
-        city: "Quito",
-        color: "#fff"
+        reminder_day:"",
+        reminder_number:"",
+        city: "",
+        color: "#FFFFFF"
     }
 ];

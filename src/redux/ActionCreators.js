@@ -1,44 +1,11 @@
 import * as ActionTypes from './ActionTypes';
 import { baseUrl } from '../shared/baseUrl';
 import axios from 'axios';
-
-export const fetchForecastsRequest=()=>{
-    return{
-        type:ActionTypes.FETCH_FORECASTS_REQUEST
-    }
-}
-export const fetchForecastsSuccess=forecasts=>{
-    return{
-        type:ActionTypes.FETCH_FORECASTS_SUCCESS,
-        payload: forecasts
-    }
-}
-export const fetchForecastsFailure=error=>{
-    return{
-        type:ActionTypes.FETCH_FORECASTS_FAILURE,
-        payload: error
-    }
-}
-export const fetchForecasts=()=>{
-    var city='Quito';
-    var API_KEY='46dc47b19cc1c481d35537521c0501e2';
-    return(dispatch)=>{
-        dispatch(fetchForecastsRequest)
-        axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`)
-        .then(response=>{
-            const forecasts=response.data
-            dispatch(fetchForecastsSuccess(forecasts))
-        })
-        .catch(error=>{
-            const errorMsg=error.message
-            dispatch(fetchForecastsFailure)
-        })
-    }
-}
 /*
 export const fetchForecasts = () => (dispatch) => {
-    debugger
-    return axios.get('http://api.openweathermap.org/data/2.5/weather?q=Quito&appid=46dc47b19cc1c481d35537521c0501e2')
+    var city = 'Quito';
+    var API_KEY = '46dc47b19cc1c481d35537521c0501e2';
+    return axios.get(`http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}`)
         .then(response => {
             if (response.ok) {
                 return response;
@@ -67,9 +34,9 @@ export const addForecast = (forecast) => ({
 export const addForecasts = (forecasts) => ({
     type: ActionTypes.ADD_FORECASTS,
     payload: forecasts
-});*/
-
-export const postReminder = (id, text, day_name, day_number, month, year, time, city, color) => (dispatch) => {
+});
+*/
+export const postReminder = (id, text, day_name, day_number, month, year, time,reminder_day,reminder_number, city, color) => (dispatch) => {
     const newReminder = {
         id: id,
         text: text,
@@ -78,6 +45,8 @@ export const postReminder = (id, text, day_name, day_number, month, year, time, 
         month: month,
         year: year,
         time: time,
+        reminder_day:reminder_day,
+        reminder_number:reminder_number,
         city: city,
         color: color
     };

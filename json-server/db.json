@@ -1,24 +1,15 @@
 {
   "reminders": [
     {
-      "id": 0,
-      "text": "Recordatorio",
-      "day_name": "",
-      "day_number": "",
-      "month": "",
-      "year": "",
-      "time": "",
-      "city": "Quito",
-      "color": "#fff"
-    },
-    {
-      "text": "Reminder",
-      "day_name": "Mon",
-      "day_number": "05",
+      "text": "Testing Reminder",
+      "day_name": "Tue",
+      "day_number": "06",
       "month": "Oct",
       "year": "2020",
-      "time": "00:09:36",
-      "city": "Cuenca",
+      "time": "21:09:18",
+      "reminder_day": "Wednesday",
+      "reminder_number": "29",
+      "city": "Quito",
       "color": "#EEF",
       "id": 1
     }
