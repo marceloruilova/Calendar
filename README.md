@@ -19,16 +19,25 @@ Runs the json server for loading the reminders data.<br />
 What currently works:
 
 Adding reminders to the db.json.
+
 Show all the reminders.
+
 Used Redux,thunk and logger to ConfigureStore
 and combine Reducers
 
+The API doesn't work(It is commented what I tried to do), chromepickercolor doesn't work.
+
 Things that still need to be done:
+
 
 Edit, delete reminders
 
+
 Things I could improve:
 
+
 Tidy up the structure of the project
+
 Render each reminder
+
 Change between months
