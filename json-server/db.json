@@ -1,0 +1,17 @@
+{
+  "reminders": [
+    {
+      "text": "Testing Reminder",
+      "day_name": "Tue",
+      "day_number": "06",
+      "month": "Oct",
+      "year": "2020",
+      "time": "21:09:18",
+      "reminder_day": "Wednesday",
+      "reminder_number": "29",
+      "city": "Quito",
+      "color": "#EEF",
+      "id": 1
+    }
+  ]
+}
