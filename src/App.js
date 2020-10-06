@@ -1,5 +1,4 @@
 import React from 'react';
-import logo from './logo.svg';
 import Main from './components/MainComponent';
 import './App.css';
 import {Provider} from 'react-redux';
